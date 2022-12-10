@@ -8,22 +8,26 @@ function App() {
  const [isAscd , setIsAscd] = useState(true)
  const [color , setClolor] = useState(true)
 const ref = useRef(null)
-
+const [count , setCount] = useState(0)
 
  useEffect(()=>{
-  fetch(`http://localhost:5000/users?oder=${isAscd  ? "asc" : "dsc"}`)
+  fetch(`https://y-psi-sable.vercel.app/users?oder=${isAscd  ? "asc" : "dsc"}`)
   .then(res => res.json())
   .then(data =>{
-    console.log(data)
+  
     setUserData(data)
   })
  } , [isAscd])
-console.log(uerData);
+// console.log(uerData);
 console.log(isAscd);
-console.log(color);
+
 const testFunction = (id) =>{
- const parent =   ref.current.parentElement.children[id - 1 ];
- parent.style.backgroundColor  = "pink"
+  // !isAscd && setCount(count + 1) 
+  // console.log(count );
+  
+ const parent =   ref.current.parentElement.children[ isAscd ? id - 1 : ""  ];
+  parent.style.backgroundColor = "Pink"
+ 
 }
 
 
@@ -105,7 +109,7 @@ const testFunction = (id) =>{
             </tr> */}
             
         {uerData?.map(user => {
-          return <tr ref={ref} className={`  ${color ? "bg-white " : "bg-green-500"}   border-b dark:bg-gray-900 dark:border-gray-700`}>
+          return <tr ref={ref} className= {`bg-white   border-b dark:bg-gray-900 dark:border-gray-700`}>
                 
                 
                
@@ -151,7 +155,9 @@ const testFunction = (id) =>{
                    {user.edit}
                 </td>
                 <td className="py-4 px-6">
-                   <button className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={()=>testFunction(user.id)}>Change Color</button>
+                   <button className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                   
+                    onClick={()=>testFunction(user.id)}>Change Color</button>
                 </td>
                 
             </tr>
